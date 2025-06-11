@@ -1,0 +1,31 @@
+import pandas as pd
+import numpy as np
+
+def normalize_with_median_shift(series):
+    min_val = series.min()
+    max_val = series.max()
+
+    if min_val == max_val:
+        return pd.Series([0.5] * len(series))
+    
+    normalized = (series - min_val) / (max_val - min_val)
+    median = np.median(normalized)
+    shift = 0.5 - median
+    shifted = normalized + shift
+    return shifted.clip(0, 1)
+
+
+df = pd.read_csv("smite_matches_with_class2.csv")
+
+
+cols_to_normalize = ['Health', 'Mana', 'Speed', 'Physical_Protection', 'Magical_Protection']
+
+
+for col in cols_to_normalize:
+    df[col] = normalize_with_median_shift(df[col])
+
+
+df.to_csv("smite_matches_with_class5.csv", index=False)
+
+
+print(df.head())

@@ -1,0 +1,16 @@
+import pandas as pd
+
+
+matches_df = pd.read_csv('smite_matches.csv')
+champions_df = pd.read_csv('smite_champions.csv')
+
+
+champions_df = champions_df.rename(columns={'Name': 'God_Name'})
+
+
+merged_df = matches_df.merge(champions_df[['God_Name', 'Class']], on='God_Name', how='left')
+
+
+merged_df.to_csv('smite_matches_with_class.csv', index=False)
+
+print("Class column successfully added and saved to 'smite_matches_with_class.csv'.")

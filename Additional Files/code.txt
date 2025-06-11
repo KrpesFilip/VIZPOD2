@@ -1,0 +1,74 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import time
+
+# Base URL for the match history pages
+base_url = "https://smite.guru/profile/8013871-CoolKidLPF/matches?page={}"
+
+# List to store match data
+matches = []
+
+# Total number of pages to scrape
+total_pages = 22
+
+for page in range(1, total_pages + 1):
+    print(f"Scraping page {page}...")
+    url = base_url.format(page)
+    response = requests.get(url)
+    if response.status_code != 200:
+        print(f"Failed to retrieve page {page}")
+        continue
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find all match containers
+    match_containers = soup.find_all('div', class_='match-widget')
+
+    for match in match_containers:
+        # Extract Match Type
+        title_div = match.find('div', class_='title')
+        match_type = title_div.text.strip().split(':')[1].split('-')[0].strip() if title_div else 'N/A'
+
+        # Extract God Name
+        god_div = match.find('div', class_='text-center match-widget--title')
+        god_name = god_div.text.strip() if god_div else 'N/A'
+
+        # Extract Kills, Deaths, Assists
+        kills_span = match.find('span', class_='match-widget__kills')
+        deaths_span = match.find('span', class_='match-widget__deaths')
+        assists_span = match.find('span', class_='match-widget__assists')
+
+        kills = kills_span.text.strip() if kills_span else '0'
+        deaths = deaths_span.text.strip() if deaths_span else '0'
+        assists = assists_span.text.strip() if assists_span else '0'
+
+        # Extract Items
+        item_imgs = match.find_all('img', class_='item-img')
+        items = [img['alt'] for img in item_imgs if img.has_attr('alt')]
+        # Ensure there are exactly 6 items
+        while len(items) < 6:
+            items.append('N/A')
+
+        # Append the data to the matches list
+        matches.append({
+            'Match_Type': match_type,
+            'God_Name': god_name,
+            'Kills': kills,
+            'Deaths': deaths,
+            'Assists': assists,
+            'Item1': items[0],
+            'Item2': items[1],
+            'Item3': items[2],
+            'Item4': items[3],
+            'Item5': items[4],
+            'Item6': items[5],
+        })
+
+    # Be polite and wait before the next request
+    time.sleep(1)
+
+# Create a DataFrame and export to CSV
+df = pd.DataFrame(matches)
+df.to_csv('smite_matches.csv', index=False)
+print("Data has been successfully exported to 'smite_matches.csv'")

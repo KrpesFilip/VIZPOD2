@@ -1,0 +1,15 @@
+MAIN: https://www.kaggle.com/datasets/nikdavis/steam-store-games
+https://www.kaggle.com/datasets/nikdavis/steam-store-games
+https://github.com/CraigKelly/steam-data/blob/master/analysis/games-features-edit.csv
+initial: https://www.kaggle.com/datasets/thedevastator/global-video-game-sales/data
+DATASETS LIST: https://github.com/leomaurodesenv/game-datasets?tab=readme-ov-file#dataset
+steam game stats https://www.kaggle.com/datasets/mexwell/steamgames
+hd decks https://www.kaggle.com/datasets/sarahcrowder/8-years-of-hearthstone-decks
+
+smite god stats https://www.kaggle.com/datasets/mattop/smite-god-base-statistics-data
+
+osnovne funkcionalnosti - osnovni prikaz
+napredne funkcionalnosti - prikaz bilo cega ne na default screenu (filteri etc.)
+osnovna ponašanja - sve sta interagira s korisnikom click etc
+smite svg https://icons8.com/icons/set/smite-logo
+free svg https://www.svgrepo.com
