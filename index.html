@@ -16,6 +16,7 @@
       margin: 0;
       font-family: sans-serif;
       background-color: #bcb8b8;
+      
     }
 
     #header {
@@ -72,8 +73,9 @@
 
     .node {
       cursor: pointer;
-      font: 12px sans-serif;
+      font: 17px sans-serif;
       font-weight: bold;
+      
     }
 
     .node circle {
@@ -264,11 +266,11 @@ function drawTopGodsKillsLineGraph(data, containerSelector, selectedClass) {
           {
             "name": "Joust",
             "children": [
-              {"name": "Assassin", "size": 10},
-              {"name": "Guardian", "size": 10},
-              {"name": "Hunter", "size": 10},
-              {"name": "Mage", "size": 10},
-              {"name": "Warrior", "size": 10}
+              {"name": "Assassin", "size": 0},
+              {"name": "Guardian", "size": 0},
+              {"name": "Hunter", "size": 0},
+              {"name": "Mage", "size": 0},
+              {"name": "Warrior", "size": 0}
             ]
           },
           {
@@ -458,6 +460,7 @@ function drawTopGodsKillsLineGraph(data, containerSelector, selectedClass) {
     }
 
     d3.select("#details").html("");  
+    d3.select("#line").html("");
     activeLeafUid = null;
     update(d);
     return;
@@ -466,6 +469,7 @@ function drawTopGodsKillsLineGraph(data, containerSelector, selectedClass) {
   if (!d.children && !d._children) { 
     if (activeLeafUid === d.uid) {
       d3.select("#details").html("");
+      d3.select("#line").html("");
       activeLeafUid = null;
     } else {
       activeLeafUid = d.uid;
@@ -473,7 +477,7 @@ function drawTopGodsKillsLineGraph(data, containerSelector, selectedClass) {
       d3.select("#details").html("")
         .append("div")
         .attr("id", "playerStatsContainer");
-
+      d3.select("#line").html("");
       
       let matchTypeNode = d;
       while (matchTypeNode && matchTypeNode.depth > 1) {
@@ -519,6 +523,7 @@ console.log("Filtered data for", matchType, "/", godClass, ":", filteredData);
   } else {
     
     d3.select("#details").html("");
+    d3.select("#line").html("");
     activeLeafUid = null;
 
     if (d.children) {

@@ -58,7 +58,7 @@ function drawPieChart(data, containerSelector, selectedClass) {
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
     .style("fill", "white")
-    .style("font-size", "12px")
+    .style("font-size", "17px")
     .text(d => {
       const percent = ((d.data.values / total) * 100).toFixed(1);
       return `${d.data.key}: ${percent}%`;
