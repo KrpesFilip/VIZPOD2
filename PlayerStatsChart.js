@@ -16,7 +16,7 @@ function drawPieChart(data, containerSelector, selectedClass) {
 
   const width = 400, height = 400, baseRadius = Math.min(width, height) / 2 * 0.85;
 
-  // Custom color mapping
+  
   const classColors = {
     Assassin: "#FFD700",
     Warrior: "red",
