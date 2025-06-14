@@ -7,7 +7,6 @@ function drawPlayerStatsCharts(d, containerSelector, selectedClass) {
 }
 
 function drawPieChart(data, containerSelector, selectedClass) {
-  
   const classCounts = d3.nest()
     .key(d => d.Class)
     .rollup(v => v.length)
@@ -15,8 +14,16 @@ function drawPieChart(data, containerSelector, selectedClass) {
 
   const total = d3.sum(classCounts, d => d.values);
 
-  const width = 400, height = 400, baseRadius = Math.min(width, height) / 2*0.85;
-  const color = d3.scale.category10();
+  const width = 400, height = 400, baseRadius = Math.min(width, height) / 2 * 0.85;
+
+  // Custom color mapping
+  const classColors = {
+    Assassin: "#FFD700",
+    Warrior: "red",
+    Guardian: "green",
+    Mage: "purple",
+    Hunter: "orange"
+  };
 
   const arc = d3.svg.arc()
     .outerRadius(d => d.data.key === selectedClass ? baseRadius * 1.07 : baseRadius)
@@ -26,7 +33,6 @@ function drawPieChart(data, containerSelector, selectedClass) {
     .sort(null)
     .value(d => d.values);
 
-  
   d3.select(containerSelector).selectAll("*").remove();
 
   const svg = d3.select(containerSelector)
@@ -41,14 +47,10 @@ function drawPieChart(data, containerSelector, selectedClass) {
     .enter().append("g")
     .attr("class", "arc");
 
-  
   g.append("path")
     .attr("d", arc)
-    .style("fill", d => color(d.data.key));
-    
+    .style("fill", d => classColors[d.data.key] || "gray");  // fallback to gray if unknown class
 
-
-   
   g.append("text")
     .attr("transform", function(d) {
       const [x, y] = arc.centroid(d);
@@ -64,6 +66,7 @@ function drawPieChart(data, containerSelector, selectedClass) {
       return `${d.data.key}: ${percent}%`;
     });
 }
+
 
 function drawTopGodsTable(data, containerSelector, selectedClass) {
   
