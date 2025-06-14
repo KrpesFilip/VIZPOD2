@@ -49,7 +49,7 @@ function drawPieChart(data, containerSelector, selectedClass) {
 
   g.append("path")
     .attr("d", arc)
-    .style("fill", d => classColors[d.data.key] || "gray");  // fallback to gray if unknown class
+    .style("fill", d => classColors[d.data.key] || "gray"); 
 
   g.append("text")
     .attr("transform", function(d) {
